@@ -10,6 +10,12 @@ const bikePumpIcon = new L.Icon({
   iconSize: [25, 25],
 });
 
+// Custom icon for flags
+const flagIcon = new L.Icon({
+  iconUrl: 'https://cdn-icons-png.flaticon.com/512/684/684908.png', // Replace with actual flag icon URL
+  iconSize: [25, 25],
+});
+
 const Map = () => {
   const [pumpStations, setPumpStations] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -36,6 +42,13 @@ const Map = () => {
     );
   }
 
+  // Coordinates for the flags in the middle of Stockholm
+  const flagCoordinates = [
+    [59.3293, 18.0686],
+    [59.3294, 18.0687],
+    [59.3295, 18.0688],
+  ];
+
   return (
     <MapContainer center={[59.3293, 18.0686]} zoom={13} style={{ height: '100vh', width: '100%' }}>
       <TileLayer
@@ -47,6 +60,13 @@ const Map = () => {
           <Popup>
             <strong>{station.name}</strong><br />
             {station.address}
+          </Popup>
+        </Marker>
+      ))}
+      {flagCoordinates.map((coords, index) => (
+        <Marker key={`flag-${index}`} position={coords} icon={flagIcon}>
+          <Popup>
+            <strong>Flag {index + 1}</strong>
           </Popup>
         </Marker>
       ))}
